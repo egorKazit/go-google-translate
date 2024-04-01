@@ -94,7 +94,7 @@ func TestResolve(t *testing.T) {
 	if res == nil {
 		t.Fatalf("Incorect result")
 	}
-	if len(res.otherTranslations) != 19 {
+	if len(res.OtherTranslations) != 19 {
 		t.Fatalf("Can not parse")
 	}
 	if err != nil {
@@ -104,13 +104,13 @@ func TestResolve(t *testing.T) {
 
 func TestGetOriginalWord(t *testing.T) {
 	originWord := getOriginalWord(nil)
-	if originWord.word != "" {
-		t.Fatalf("Origin should be initial: word")
+	if originWord.Word != "" {
+		t.Fatalf("Origin should be initial: Word")
 	}
-	if originWord.examples != nil {
-		t.Fatalf("Origin should be initial: examples")
+	if originWord.Examples != nil {
+		t.Fatalf("Origin should be initial: Examples")
 	}
-	if originWord.wordMeanings != nil {
+	if originWord.WordMeanings != nil {
 		t.Fatalf("Origin should be initial: meanings")
 	}
 }

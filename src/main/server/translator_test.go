@@ -62,38 +62,38 @@ func TestErrorOnTranslate(t *testing.T) {
 
 func TestAll(t *testing.T) {
 	res, _ := GetTranslator().Translate("test", "en", "de")
-	if res.origin.word != "test" {
-		t.Fatalf("Wrong original word")
+	if res.Origin.Word != "test" {
+		t.Fatalf("Wrong original Word")
 	}
-	if len(res.origin.examples) != 8 {
+	if len(res.Origin.Examples) != 8 {
 		t.Fatalf("Wrong example counts")
 	}
-	if len(res.origin.wordMeanings) != 7 {
-		t.Fatalf("Wrong word meanings counts")
+	if len(res.Origin.WordMeanings) != 7 {
+		t.Fatalf("Wrong Word meanings counts")
 	}
-	if res.translation.word != "prüfen" {
-		t.Fatalf("Wrong word meanings counts")
+	if res.Translation.Word != "prüfen" {
+		t.Fatalf("Wrong Word meanings counts")
 	}
-	if len(res.translation.partOfSpeeches) != 1 {
-		t.Fatalf("Wrong word meanings counts")
+	if len(res.Translation.PartOfSpeeches) != 1 {
+		t.Fatalf("Wrong Word meanings counts")
 	}
 }
 
 func TestAllWithDefaultClient(t *testing.T) {
 	res, _ := GetTranslatorWithCustomClient(nil).Translate("test", "en", "de")
-	if res.origin.word != "test" {
-		t.Fatalf("Wrong original word")
+	if res.Origin.Word != "test" {
+		t.Fatalf("Wrong original Word")
 	}
-	if len(res.origin.examples) != 8 {
+	if len(res.Origin.Examples) != 8 {
 		t.Fatalf("Wrong example counts")
 	}
-	if len(res.origin.wordMeanings) != 7 {
-		t.Fatalf("Wrong word meanings counts")
+	if len(res.Origin.WordMeanings) != 7 {
+		t.Fatalf("Wrong Word meanings counts")
 	}
-	if res.translation.word != "prüfen" {
-		t.Fatalf("Wrong word meanings counts")
+	if res.Translation.Word != "prüfen" {
+		t.Fatalf("Wrong Word meanings counts")
 	}
-	if len(res.translation.partOfSpeeches) != 1 {
-		t.Fatalf("Wrong word meanings counts")
+	if len(res.Translation.PartOfSpeeches) != 1 {
+		t.Fatalf("Wrong Word meanings counts")
 	}
 }

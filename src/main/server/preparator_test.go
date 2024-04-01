@@ -11,7 +11,7 @@ func TestPrepareTranslationQuery(t *testing.T) {
 	compiler, _ := regexp.Compile("_reqid=\\d+&bl=01010&f.sid=10101&hl=en-US&id=MkEWBc&rt=c&soc-app=1&soc-device=1&soc-platform=1")
 	result := compiler.FindAllString(*translationObject, -1)
 	if len(result) != 1 {
-		t.Fatalf(fmt.Sprintf(`Incorrect result for word object %s`, result))
+		t.Fatalf(fmt.Sprintf(`Incorrect result for Word object %s`, result))
 	}
 }
 

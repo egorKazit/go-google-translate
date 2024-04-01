@@ -99,7 +99,7 @@ func (translator *translator) fetchTranslation(text string, sourceLang string, t
 	body, _ := io.ReadAll(response.Body)
 	translation, err := resolveTranslation(body)
 	if err != nil {
-		log.Printf("Error at word resolving: %s", err.Error())
+		log.Printf("Error at Word resolving: %s", err.Error())
 		return nil, err
 	}
 	return translation, nil

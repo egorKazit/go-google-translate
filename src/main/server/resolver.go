@@ -37,9 +37,9 @@ func resolveTranslation(response []byte) (*Translation, error) {
 		}
 
 		result := &Translation{}
-		result.origin = getOriginalWord(responseArray)
-		result.translation = getTranslation(responseArray[1])
-		result.otherTranslations = getOtherTranslations(responseArray)
+		result.Origin = getOriginalWord(responseArray)
+		result.Translation = getTranslation(responseArray[1])
+		result.OtherTranslations = getOtherTranslations(responseArray)
 
 		return result, nil
 	} else {
@@ -51,23 +51,23 @@ func resolveTranslation(response []byte) (*Translation, error) {
 func getOriginalWord(translationObject any) WordDefinition {
 
 	result := WordDefinition{}
-	// if not a list -> return empty translation
+	// if not a list -> return empty Translation
 	if _, ok := translationObject.([]interface{}); !ok {
 		log.Printf("can not covert type %v. Please create an incident if critical", translationObject)
 		return result
 	}
-	// get nested. translation should be at 0,0
+	// get nested. Translation should be at 0,0
 	translation := getNested(translationObject.([]interface{}), []int{0, 0})
 
 	// there should be a string at the end of the path
 	if translationValue, ok := translation.(string); ok {
-		// fill translation
-		result.word = translationValue
+		// fill Translation
+		result.Word = translationValue
 	}
 
-	// fill meaning as well
-	result.wordMeanings = getMeanings(getNested(translationObject, []int{3, 1, 0}))
-	result.examples = getExamples(getNested(translationObject, []int{3, 2, 0}))
+	// fill Meaning as well
+	result.WordMeanings = getMeanings(getNested(translationObject, []int{3, 1, 0}))
+	result.Examples = getExamples(getNested(translationObject, []int{3, 2, 0}))
 	return result
 
 }
@@ -78,10 +78,10 @@ func getTranslation(translationObject any) WordWithPathOfSpeech {
 	wordCandidate := getNested(translationObject, []int{0, 0, 5, 0, 0})
 	// there should be a string at the end of the path
 	if wordCandidateValue, ok := wordCandidate.(string); ok {
-		result.word = wordCandidateValue
+		result.Word = wordCandidateValue
 	}
 	// fill other information
-	result.partOfSpeeches = getPartOfSpeech(getNested(translationObject, []int{0, 0, 9, 0}))
+	result.PartOfSpeeches = getPartOfSpeech(getNested(translationObject, []int{0, 0, 9, 0}))
 	return result
 
 }
@@ -97,7 +97,7 @@ func getOtherTranslations(translationObject any) []WordWithPathOfSpeech {
 		return result
 	}
 
-	// go through array and fill translation if possible
+	// go through array and fill Translation if possible
 	if translationObjectValues, ok := translationObject.([]interface{})[6].([]interface{}); ok {
 		for _, translation := range translationObjectValues {
 			result = append(result, getTranslation(translation))
@@ -127,7 +127,7 @@ func getPartOfSpeech(translationObject any) map[float64]string {
 func getSynonyms(translationObject any) []string {
 
 	result := make([]string, 0)
-	// get synonyms at path
+	// get Synonyms at path
 	if _, ok := translationObject.([]interface{}); !ok {
 		log.Printf("can not covert type %v. Please create an incident if critical", translationObject)
 		return result
@@ -173,25 +173,25 @@ func getMeanings(meaningsObject any) []WordMeaning {
 				continue
 			}
 			wordMeaning := WordMeaning{}
-			// if meaning is presented, then fill in
+			// if Meaning is presented, then fill in
 			if meaning, ok := meaningPerPartOfSpeech.([]interface{})[0].(string); ok {
-				wordMeaning.meaning = meaning
+				wordMeaning.Meaning = meaning
 			}
 			if len(meaningPerPartOfSpeech.([]interface{})) > 1 {
 				// the same for example
 				if meaningUsage, ok := meaningPerPartOfSpeech.([]interface{})[1].(string); ok {
-					wordMeaning.usage = meaningUsage
+					wordMeaning.Usage = meaningUsage
 				}
 			}
 			if len(meaningPerPartOfSpeech.([]interface{})) > 3 {
 				// and part of speech
 				if partOfSpeech, ok := meaningObject.([]interface{})[3].(float64); ok {
-					wordMeaning.partOfSpeech = partOfSpeech
-					wordMeaning.partOfSpeechName = wordTypes[int(wordMeaning.partOfSpeech)-1]
+					wordMeaning.PartOfSpeech = partOfSpeech
+					wordMeaning.PartOfSpeechName = wordTypes[int(wordMeaning.PartOfSpeech)-1]
 				}
 			}
 			if len(meaningPerPartOfSpeech.([]interface{})) > 5 {
-				wordMeaning.synonyms = getSynonyms(getNested(meaningPerPartOfSpeech.([]interface{})[5], []int{0, 0}))
+				wordMeaning.Synonyms = getSynonyms(getNested(meaningPerPartOfSpeech.([]interface{})[5], []int{0, 0}))
 			}
 			result = append(result, wordMeaning)
 		}

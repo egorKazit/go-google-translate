@@ -22,26 +22,26 @@ var wordTypes = [...]string{
 	"Particle"}
 
 type Translation struct {
-	origin            WordDefinition
-	translation       WordWithPathOfSpeech
-	otherTranslations []WordWithPathOfSpeech
+	Origin            WordDefinition
+	Translation       WordWithPathOfSpeech
+	OtherTranslations []WordWithPathOfSpeech
 }
 
 type WordWithPathOfSpeech struct {
-	word           string
-	partOfSpeeches map[float64]string
+	Word           string
+	PartOfSpeeches map[float64]string
 }
 
 type WordDefinition struct {
-	word         string
-	wordMeanings []WordMeaning
-	examples     []string
+	Word         string
+	WordMeanings []WordMeaning
+	Examples     []string
 }
 
 type WordMeaning struct {
-	meaning          string
-	usage            string
-	synonyms         []string
-	partOfSpeech     float64
-	partOfSpeechName string
+	Meaning          string
+	Usage            string
+	Synonyms         []string
+	PartOfSpeech     float64
+	PartOfSpeechName string
 }
