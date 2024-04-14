@@ -13,7 +13,7 @@ func getNested(nestedValue any, path []int) any {
 	for index, value := range path {
 		// if not last index -> handle results
 		if pathLen > index {
-			if len(results) < value {
+			if len(results) <= value {
 				return nil
 			}
 			// re-covert to middle
