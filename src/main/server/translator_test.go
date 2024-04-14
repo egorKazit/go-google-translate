@@ -97,3 +97,23 @@ func TestAllWithDefaultClient(t *testing.T) {
 		t.Fatalf("Wrong Word meanings counts")
 	}
 }
+
+func TestAllWithDefaultClientNonTranslatable(t *testing.T) {
+	res, _ := GetTranslatorWithCustomClient(nil).Translate("authward", "en", "ru")
+	if res.Origin.Word != "authward" {
+		t.Fatalf("Wrong Origin word")
+	}
+	if res.Translation.Word != "авторитет" {
+		t.Fatalf("Wrong translation word")
+	}
+}
+
+func TestAllWithDefaultClient1(t *testing.T) {
+	res, _ := GetTranslatorWithCustomClient(nil).Translate("42", "en", "de")
+	if res.Origin.Word != "42" {
+		t.Fatalf("Wrong Origin word")
+	}
+	if res.Translation.Word != "42" {
+		t.Fatalf("Wrong translation word")
+	}
+}

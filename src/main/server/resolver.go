@@ -4,8 +4,11 @@ import (
 	"encoding/json"
 	"errors"
 	"log"
+	"regexp"
 	"strings"
 )
+
+var digitCheck = regexp.MustCompile(`^[0-9]+$`)
 
 func resolveTranslation(originWord string, response []byte) (*Translation, error) {
 	// covert string and split by newline
@@ -41,12 +44,13 @@ func resolveTranslation(originWord string, response []byte) (*Translation, error
 		result.Translation = getTranslation(responseArray[1])
 		result.OtherTranslations = getOtherTranslations(responseArray)
 
-		if strings.ToLower(result.Translation.Word) == strings.ToLower(originWord) {
-			if len(result.OtherTranslations) > 0 {
-				result.Translation, result.OtherTranslations = result.OtherTranslations[0], result.OtherTranslations[1:]
-			} else {
-				return nil, errors.New("can not translate")
-			}
+		if strings.ToLower(result.Translation.Word) == strings.ToLower(originWord) &&
+			!digitCheck.MatchString(originWord) && len(result.OtherTranslations) > 0 {
+			result.Translation, result.OtherTranslations = result.OtherTranslations[0], result.OtherTranslations[1:]
+		}
+
+		if result.Origin.Word == "" {
+			result.Origin.Word = originWord
 		}
 
 		return result, nil
