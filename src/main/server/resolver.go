@@ -7,7 +7,7 @@ import (
 	"strings"
 )
 
-func resolveTranslation(response []byte) (*Translation, error) {
+func resolveTranslation(originWord string, response []byte) (*Translation, error) {
 	// covert string and split by newline
 	bodyString := string(response)
 	allFindings := strings.Split(bodyString, "\n")
@@ -40,6 +40,14 @@ func resolveTranslation(response []byte) (*Translation, error) {
 		result.Origin = getOriginalWord(responseArray)
 		result.Translation = getTranslation(responseArray[1])
 		result.OtherTranslations = getOtherTranslations(responseArray)
+
+		if strings.ToLower(result.Translation.Word) == strings.ToLower(originWord) {
+			if len(result.OtherTranslations) > 0 {
+				result.Translation, result.OtherTranslations = result.OtherTranslations[0], result.OtherTranslations[1:]
+			} else {
+				return nil, errors.New("can not translate")
+			}
+		}
 
 		return result, nil
 	} else {

@@ -6,7 +6,7 @@ import (
 )
 
 func TestResolveWrong(t *testing.T) {
-	res, err := resolveTranslation([]byte(")]}'\n\n7156"))
+	res, err := resolveTranslation("test", []byte(")]}'\n\n7156"))
 	if res != nil {
 		t.Fatalf("Incorect result")
 	}
@@ -16,7 +16,7 @@ func TestResolveWrong(t *testing.T) {
 }
 
 func TestResolveNoJson(t *testing.T) {
-	res, err := resolveTranslation([]byte(")]}'\n\n7156\n\"test\""))
+	res, err := resolveTranslation("test", []byte(")]}'\n\n7156\n\"test\""))
 	if res != nil {
 		t.Fatalf("Incorect result")
 	}
@@ -26,7 +26,7 @@ func TestResolveNoJson(t *testing.T) {
 }
 
 func TestResolveWrongJsonEmptyObject(t *testing.T) {
-	res, err := resolveTranslation([]byte(")]}'\n\n7156\n{}"))
+	res, err := resolveTranslation("test", []byte(")]}'\n\n7156\n{}"))
 	if res != nil {
 		t.Fatalf("Incorect result")
 	}
@@ -36,7 +36,7 @@ func TestResolveWrongJsonEmptyObject(t *testing.T) {
 }
 
 func TestResolveWrongJsonEmptyArray(t *testing.T) {
-	res, err := resolveTranslation([]byte(")]}'\n\n7156\n[]"))
+	res, err := resolveTranslation("test", []byte(")]}'\n\n7156\n[]"))
 	if res != nil {
 		t.Fatalf("Incorect result")
 	}
@@ -46,7 +46,7 @@ func TestResolveWrongJsonEmptyArray(t *testing.T) {
 }
 
 func TestResolveWrongJsonShortArray(t *testing.T) {
-	res, err := resolveTranslation([]byte(")]}'\n\n7156\n[[],[],[],[]]"))
+	res, err := resolveTranslation("test", []byte(")]}'\n\n7156\n[[],[],[],[]]"))
 	if res != nil {
 		t.Fatalf("Incorect result")
 	}
@@ -56,7 +56,7 @@ func TestResolveWrongJsonShortArray(t *testing.T) {
 }
 
 func TestResolveWrongJsonEmptyValue(t *testing.T) {
-	res, err := resolveTranslation([]byte(")]}'\n\n7156\n[[[]],[[]],[[]]]"))
+	res, err := resolveTranslation("test", []byte(")]}'\n\n7156\n[[[]],[[]],[[]]]"))
 	if res != nil {
 		t.Fatalf("Incorect result")
 	}
@@ -66,7 +66,7 @@ func TestResolveWrongJsonEmptyValue(t *testing.T) {
 }
 
 func TestResolveWrongJsonNoNestedArray(t *testing.T) {
-	res, err := resolveTranslation([]byte(")]}'\n\n7156\n[{},{},{},{}]"))
+	res, err := resolveTranslation("test", []byte(")]}'\n\n7156\n[{},{},{},{}]"))
 	if res != nil {
 		t.Fatalf("Incorect result")
 	}
@@ -76,7 +76,7 @@ func TestResolveWrongJsonNoNestedArray(t *testing.T) {
 }
 
 func TestResolveWrongJsonNoNestedMarshaling(t *testing.T) {
-	res, err := resolveTranslation([]byte(")]}'\n\n7156\n[[\"\",\"\",\"tt\"]]"))
+	res, err := resolveTranslation("test", []byte(")]}'\n\n7156\n[[\"\",\"\",\"tt\"]]"))
 	if res != nil {
 		t.Fatalf("Incorect result")
 	}
@@ -90,7 +90,7 @@ func TestResolve(t *testing.T) {
 	if err != nil {
 		t.Fatalf("Error provided")
 	}
-	res, err := resolveTranslation(data)
+	res, err := resolveTranslation("test", data)
 	if res == nil {
 		t.Fatalf("Incorect result")
 	}
